@@ -1,1 +1,0 @@
-{"Modules":[{"Source":"codebuild","Key":"1.codebuild;codebuild","Version":"","Dir":".terraform/modules/8cccc82f994a504d9319ee37ad5ceb93","Root":""},{"Source":"codebuild","Key":"1.api_codebuild;codebuild","Version":"","Dir":".terraform/modules/c9953a2f20fca4d997afb62de727f8e0","Root":""}]}
