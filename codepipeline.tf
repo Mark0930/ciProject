@@ -25,23 +25,26 @@ resource "aws_codepipeline" "foo" {
         OAuthToken = "${var.github_token}"
       }
     }
+
+    action {
+      name             = "Dynamo_Source"
+      category         = "Source"
+      owner            = "ThirdParty"
+      provider         = "GitHub"
+      version          = "1"
+      output_artifacts = ["${var.project_name}-dynamo-pipeline-artifact"]
+
+      configuration {
+        Owner      = "Mark0930"
+        Repo       = "dynamo"
+        Branch     = "master"
+        OAuthToken = "${var.github_token}"
+      }
+    }
   }
 
   stage {
     name = "Dev"
-
-    // action {
-    //   name            = "Pages"
-    //   category        = "Build"
-    //   owner           = "AWS"
-    //   provider        = "CodeBuild"
-    //   input_artifacts = ["${var.project_name}-pipeline-artifact"]
-    //   version         = "1"
-
-    //   configuration {
-    //     ProjectName = "${module.codebuild.codebuild_output}"
-    //   }
-    // }
 
     action {
       name            = "Api"
@@ -53,6 +56,19 @@ resource "aws_codepipeline" "foo" {
 
       configuration {
         ProjectName = "${module.api_codebuild.codebuild_output}"
+      }
+    }
+
+    action {
+      name            = "Dynamo"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      input_artifacts = ["${var.project_name}-dynamo-pipeline-artifact"]
+      version         = "1"
+
+      configuration {
+        ProjectName = "${module.dynamo_codebuild.codebuild_output}"
       }
     }
   }
