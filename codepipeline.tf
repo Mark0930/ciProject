@@ -85,7 +85,20 @@ resource "aws_codepipeline" "foo" {
       version         = "1"
 
       configuration {
-        ProjectName = "${module.api_codebuild.codebuild_output}"
+        ProjectName = "${module.api_stage_codebuild.codebuild_output}"
+      }
+    }
+
+    action {
+      name            = "Dynamo"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      input_artifacts = ["${var.project_name}-dynamo-pipeline-artifact"]
+      version         = "1"
+
+      configuration {
+        ProjectName = "${module.dynamo_stage_codebuild.codebuild_output}"
       }
     }
   }
@@ -102,7 +115,20 @@ resource "aws_codepipeline" "foo" {
       version         = "1"
 
       configuration {
-        ProjectName = "${module.api_codebuild.codebuild_output}"
+        ProjectName = "${module.api_prod_codebuild.codebuild_output}"
+      }
+    }
+
+     action {
+      name            = "Dynamo"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      input_artifacts = ["${var.project_name}-dynamo-pipeline-artifact"]
+      version         = "1"
+
+      configuration {
+        ProjectName = "${module.dynamo_prod_codebuild.codebuild_output}"
       }
     }
   }

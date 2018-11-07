@@ -12,6 +12,11 @@ resource "aws_codebuild_project" "build_project" {
     compute_type = "BUILD_GENERAL1_SMALL"
     image        = "aws/codebuild/nodejs:6.3.1"
     type         = "LINUX_CONTAINER"
+
+    environment_variable {
+      "name"  = "environment"
+      "value" = "${var.environment}"
+    }
   }
 
   source {
