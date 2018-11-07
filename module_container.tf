@@ -33,7 +33,7 @@ module "dynamo_stage_codebuild" {
   environment="stage"
 }
 
-module "dynamo__prod_codebuild" {
+module "dynamo_prod_codebuild" {
   source  = "codebuild"
   project_name= "${var.project_name}-dynamo-prod-codebuild"
   environment="prod"
